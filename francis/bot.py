@@ -6,10 +6,12 @@ from discord.ext import commands
 from django.conf import settings
 
 import config
-
 # intents update
+from web.apps.roles.models import DiscordRoleAssign
+
 intents = discord.Intents.default()
 intents.members = True
+
 
 class CustomContext(commands.Context):
     async def say_as_embed(
@@ -57,6 +59,16 @@ class CustomContext(commands.Context):
 
 
 class CustomBot(commands.Bot):
+    gi_emoji_to_role = dict()
+    gi_role_list = list()
+
+    def load_genshin_role_react(self):
+        ponpon_guild = self.get_guild(config.PON_SERVER_ID)
+        self.gi_role_list = list()
+        for role_id, emoji_id in DiscordRoleAssign.objects.values_list('role_id', 'emoji_id'):
+            role = ponpon_guild.get_role(role_id)
+            self.gi_emoji_to_role[emoji_id] = role
+            self.gi_role_list.append(role_id)
 
     async def on_ready(self):
         print('------')
@@ -69,6 +81,7 @@ class CustomBot(commands.Bot):
             presence = f'sensei anone'
         await self.change_presence(activity=discord.Game(name=presence))
         await self.load_tasks()
+        self.load_genshin_role_react()
 
     async def load_tasks(self):
         tasks = []

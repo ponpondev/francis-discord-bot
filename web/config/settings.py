@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'web.apps.investigations',
     'web.apps.items',
     'web.apps.pricewatchers',
+    'web.apps.roles',
 ]
 
 

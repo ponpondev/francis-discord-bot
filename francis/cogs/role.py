@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 
 import config
+from francis.bot import CustomBot
 from francis.converters import CustomRoleConverter
 from utils.user import get_user_obj
 
@@ -20,7 +21,7 @@ def good_for_role_assign(context):
 class Role(commands.Cog):
     """A cog for role management commands"""
 
-    def __init__(self, bot):
+    def __init__(self, bot: CustomBot):
         self.bot = bot
         self.en_guilds = [config.DAWN_SERVER_ID, config.PON_SERVER_ID]
         self.vi_guilds = [config.MSVN_SERVER_ID, ]
@@ -67,7 +68,7 @@ class Role(commands.Cog):
         if context.guild.id == config.PON_SERVER_ID and role.name not in config.AUTOASIGN_COLOR_ROLES:
             character_role_count = 0
             for user_role in context.author.roles:
-                if user_role.id in config.PONPON_ROLE_REACT_ROLE_IDS:
+                if user_role.id in self.bot.gi_role_list:
                     character_role_count += 1
                     if character_role_count >= 4:
                         await context.say_as_embed(
