@@ -1,6 +1,7 @@
 # import discord
 import sys
 
+import discord
 from discord.ext import commands
 
 
@@ -68,6 +69,11 @@ class OwnerCommands(commands.Cog):
             self.bot.unload_extension(f'{self.path2}{module}')
             self.bot.load_extension(f'{self.path2}{module}')
         await ctx.send('\N{OK HAND SIGN}')
+
+    @commands.command(name='edit', hidden=True)
+    @commands.is_owner()
+    async def _edit_message(self, context, message: discord.Message, *, content):
+        await message.edit(content=content)
 
     @commands.command(name='test', hidden=True)
     @commands.is_owner()
