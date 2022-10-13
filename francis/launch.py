@@ -32,20 +32,14 @@ francis.remove_command('help')
 initial_extensions = [
 
     'francis.cogs.admin',
-    'francis.cogs.dailies',
     'francis.cogs.girole',
     'francis.cogs.help',
     # 'francis.cogs.investigate',
     'francis.cogs.link',
     'francis.cogs.logger',
-    'francis.cogs.mudae',
     'francis.cogs.owner',
     # 'francis.cogs.profile',
-    'francis.cogs.requirement',
     'francis.cogs.role',
-    # 'francis.cogs.old.gacha',
-    # 'francis.cogs.old.stat_check',
-
 ]
 
 for extension in initial_extensions:
