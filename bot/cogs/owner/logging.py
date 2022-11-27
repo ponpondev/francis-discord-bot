@@ -1,5 +1,3 @@
-import asyncio
-
 import discord
 from discord.ext import commands
 from django.conf import settings
@@ -37,7 +35,6 @@ class OwnerLoggingCog(commands.Cog):
     async def _get_log(self, context, *, filename='bot.log'):
         if filename not in ['bot.log', ]:
             return
-        await asyncio.sleep(1)
         await context.send(file=discord.File(settings.BASE_DIR / filename))
 
     @_logging.command(name='flush', hidden=True)

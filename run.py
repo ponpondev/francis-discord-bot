@@ -18,10 +18,10 @@ if __name__ == "__main__":
         'bot.cogs.owner',
         'bot.cogs.role',
         'bot.cogs.runtime',
+        'bot.tasks.socials',
+        'bot.tasks.crawlers'
     ]
     if bot_conf.DEBUG:
         initial_extensions += [
-            'bot.tasks.socials',
-            'bot.tasks.crawlers'
         ]
     run(bot_conf.PREFIX, settings.DISCORD_BOT_TOKEN, initial_extensions)

@@ -125,7 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -140,9 +140,6 @@ TWITTER_OWNER_ID = config('TWITTER_OWNER_ID')
 
 TWITTER_ACCESS_TOKEN = config('TWITTER_ACCESS_TOKEN')
 TWITTER_ACCESS_TOKEN_SECRET = config('TWITTER_ACCESS_TOKEN_SECRET')
-
-# msvn_discordbot/config.py -> msvn_discordbot
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # GOOGLE API AUTH
 GAPI_AUTH_DICT = {
