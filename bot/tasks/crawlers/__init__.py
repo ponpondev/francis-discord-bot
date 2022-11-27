@@ -15,25 +15,39 @@ class WebCralers(commands.Cog):
         self.honkai_web_crawler = HonkaiWebCrawler(bot)
         print('Initializing [GMS Crawler: Web]')
         self.gms_crawler = GMSCrawler(bot)
-        self.do_crawl.start()
+        self.crawl_gms_site.start()
+        self.crawl_honkai_site.start()
+        self.crawl_genshin_site.start()
 
     def cog_unload(self):
-        self.do_crawl.cancel()
+        self.crawl_gms_site.cancel()
+        self.crawl_honkai_site.cancel()
+        self.crawl_genshin_site.cancel()
 
     @tasks.loop(seconds=60.0)
-    async def do_crawl(self):
+    async def crawl_genshin_site(self):
         await self.genshin_crawler.do_crawl()
-        # await self.honkai_wiki_crawler.do_crawl()
+
+    @tasks.loop(seconds=60.0)
+    async def crawl_honkai_site(self):
         await self.honkai_web_crawler.do_crawl()
+
+    @tasks.loop(seconds=60.0)
+    async def crawl_gms_site(self):
         await self.gms_crawler.do_crawl()
 
-    @do_crawl.before_loop
-    async def before_parse(self):
-        print('[Web Crawlers] Waiting for ready state...')
+    @crawl_gms_site.before_loop
+    async def before_loop(self):
+        self.bot.logger.info('[Web Crawlers] Waiting for ready state...')
 
         await self.bot.wait_until_ready()
 
-        print('[Web Crawlers] Ready and running!')
+        self.bot.logger.info('[Web Crawlers] Ready and running!')
+
+    @crawl_honkai_site.before_loop
+    @crawl_genshin_site.before_loop
+    async def _before_loop(self):
+        await self.bot.wait_until_ready()
 
 
 async def setup(bot):
