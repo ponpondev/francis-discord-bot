@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 from datetime import timedelta
+from pprint import pprint
 
 import discord
 from bs4 import BeautifulSoup
@@ -20,7 +21,7 @@ class GMSCrawler():
         self.url = 'http://maplestory.nexon.net/news/'
 
         self.news_channel = None
-        self.news_channel_id = 453565620915535872 if not bot_conf.DEBUG else 454890599410302977
+        self.news_channel_id = 1046364478175981568 if bot_conf.DEBUG else 453565620915535872
 
     async def do_crawl(self):
         await self.parse()
@@ -103,14 +104,14 @@ class GMSCrawler():
 
         checking_data = self.spider.form_checking_data()
         site_datas = self.fetch_data()
-
         if not site_datas or not checking_data:
             return
+        self.news_channel = self.bot.get_channel(self.news_channel_id)
 
         for data in site_datas:
-
             if (data['id'], data['title']) in checking_data:
                 continue
+            print((data['id'], data['title'],))
 
             embed = discord.Embed(
                 title=data['title'],
@@ -127,15 +128,13 @@ class GMSCrawler():
 
                 embed.set_image(url=data['img'])
                 # send the message to channel
-                self.news_channel = self.bot.get_channel(id=self.news_channel_id)
-                await self.bot.say_as_embed(channel=self.news_channel, embed=embed)
+                await self.news_channel.send(embed=embed)
                 # save to drive and print the result title
-                if not bot_conf.DEBUG:
-                    self.spider.sheet.insert_row([value for value in data.values()], index=2)
+                self.spider.sheet.insert_row([value for value in data.values()], index=2)
             except Exception:
-                return
+                continue
 
-            print(f'Site Fetch: [GMS] [Fetched {data["title"]}]')
+            self.bot.logger.info(f'Site Fetch: [GMS] [Fetched {data["title"]}]')
             checking_data = self.spider.form_checking_data()
 
     def maintenance_post(self, url, *args):

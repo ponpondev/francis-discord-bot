@@ -6,10 +6,11 @@ from discord.ext import tasks, commands
 from django.conf import settings
 from pytz import timezone
 
+from bot.conf import bot_conf
 from utils import db
 
 TWITTER_USERS = {
-    816396540017152000: {'sheet': 'twitter_gmsm', 'channel_ids': [455635507561627648, ], 'name': 'GMSM'},
+    # 816396540017152000: {'sheet': 'twitter_gmsm', 'channel_ids': [455635507561627648, ], 'name': 'GMSM'},
     34667202: {'sheet': 'twitter_gms', 'channel_ids': [455634325086404608, ], 'name': 'GMS'},
     940045596575989765: {'sheet': 'twitter_hi3', 'channel_ids': [563996767302057984, ], 'name': 'HI3rd'},
     # global genshin twitter
@@ -100,7 +101,7 @@ class TweetFetcher(commands.Cog):
 
             # send the message to channel
             for channel_id in channel_ids:
-                channel = self.bot.get_channel(channel_id)
+                channel = self.bot.get_channel(1046364478175981568 if bot_conf.DEBUG else channel_id)
                 if not channel:
                     continue
                 message = await channel.send(status_url)
@@ -110,7 +111,7 @@ class TweetFetcher(commands.Cog):
                 except discord.Forbidden:
                     pass
 
-            print(f'Twitter Fetch: [{u_screen_name}] [Fetched: {status_url}]')
+            self.bot.logger.info(f'Twitter Fetch: [{u_screen_name}] [Fetched: {status_url}]')
 
             # updates the sheet and posted_ids
             sheet, posted_ids = self.get_posted_ids(user_id)

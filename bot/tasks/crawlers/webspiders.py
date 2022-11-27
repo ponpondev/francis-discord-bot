@@ -1,11 +1,7 @@
-import asyncio
 # import json
-import re
 from datetime import datetime
 
-import discord
 import requests
-from bs4 import BeautifulSoup
 from django.conf import settings
 from gspread.exceptions import APIError
 from pytz import timezone

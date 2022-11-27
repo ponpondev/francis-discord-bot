@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 
 from .webspiders import WebSpider
+from ...conf import bot_conf
 
 
 class HonkaiWikiCrawler():
@@ -222,16 +223,13 @@ class HonkaiWebCrawler():
 
     async def parse_data(self):
 
-        self.channel = self.bot.get_channel(559210580146126848)
-
+        self.channel = self.bot.get_channel(1046364478175981568 if bot_conf.DEBUG else 559210580146126848)
         checking_data = self.web_spider.form_checking_data()
         site_datas = self.fetch_data()
-
         if not site_datas or not checking_data:
             return
 
         for data in site_datas:
-
             if (data['id'], data['title']) in checking_data:
                 continue
 
@@ -255,13 +253,13 @@ class HonkaiWebCrawler():
 
             try:
                 # send the message to channel
-                await self.bot.say_as_embed(channel=self.channel, embed=embed)
+                await self.channel.send(embed=embed)
 
                 # save to drive and print the result title
                 self.web_spider.sheet.insert_row([value for value in data.values()], index=2)
             except Exception:
                 continue
 
-            print(f'Site Fetch: [HI3] [Fetched {data["title"]}]')
+            self.bot.logger.info(f'Site Fetch: [HI3] [Fetched {data["title"]}]')
             # updates the checking data
             checking_data = self.web_spider.form_checking_data()

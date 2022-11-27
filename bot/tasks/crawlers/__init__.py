@@ -11,7 +11,7 @@ class WebCralers(commands.Cog):
         print('Initializing [Genshin Crawler: Web API]')
         self.genshin_crawler = GenshinCrawler(bot)
         print('Initializing [Honkai Crawler: Web | Wiki]')
-        self.honkai_wiki_crawler = HonkaiWikiCrawler(bot)
+        # self.honkai_wiki_crawler = HonkaiWikiCrawler(bot)
         self.honkai_web_crawler = HonkaiWebCrawler(bot)
         print('Initializing [GMS Crawler: Web]')
         self.gms_crawler = GMSCrawler(bot)
@@ -23,7 +23,7 @@ class WebCralers(commands.Cog):
     @tasks.loop(seconds=60.0)
     async def do_crawl(self):
         await self.genshin_crawler.do_crawl()
-        await self.honkai_wiki_crawler.do_crawl()
+        # await self.honkai_wiki_crawler.do_crawl()
         await self.honkai_web_crawler.do_crawl()
         await self.gms_crawler.do_crawl()
 

@@ -7,6 +7,7 @@ import discord
 from pytz import timezone
 
 from .webspiders import WebSpider
+from ...conf import bot_conf
 
 
 class GenshinCrawler():
@@ -95,7 +96,7 @@ class GenshinCrawler():
             if image_url:
                 embed.set_image(url=image_url)
 
-            posting_channel = self.bot.get_channel(id=754706712358944799)
+            posting_channel = self.bot.get_channel(1046364478175981568 if bot_conf.DEBUG else 754706712358944799)
             message = await posting_channel.send(embed=embed)
             # try to auto-publish the message
             try:
@@ -115,6 +116,7 @@ class GenshinCrawler():
             }
             # save to drive and print the result title
             self.news_spider.sheet.insert_row([value for value in fetched_data.values()], index=2)
+            self.bot.logger.info(f'Site Fetch: [Genshin] [Fetched {data["title"]}]')
 
             checking_data = self.news_spider.form_checking_data()
 
