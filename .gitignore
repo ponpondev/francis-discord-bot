@@ -176,3 +176,9 @@ pm2.json
 
 # attachments
 attachments/
+
+test.py
+
+.idea/
+
+configs.json

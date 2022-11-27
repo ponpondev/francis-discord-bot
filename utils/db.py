@@ -1,9 +1,9 @@
-from oauth2client.service_account import ServiceAccountCredentials
 import gspread
-from config import GAPI_AUTH_DICT
+from django.conf import settings
+from oauth2client.service_account import ServiceAccountCredentials
 
 
-def initialize_db(key=None):
+def init_gspread(key=None):
     """Initialize and return the DB
     (optional) key: the key of google spreadsheet. Defaults to Francis DB's key
     """
@@ -15,7 +15,7 @@ def initialize_db(key=None):
     scopes = ['https://spreadsheets.google.com/feeds',
               'https://www.googleapis.com/auth/drive']
 
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(GAPI_AUTH_DICT, scopes)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(settings.GAPI_AUTH_DICT, scopes)
     client = gspread.authorize(credentials)
 
     db = client.open_by_key(key)
