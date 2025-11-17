@@ -1,10 +1,9 @@
 import json
 import re
-from inspect import Parameter
 
 import discord
 from discord.ext import commands
-from discord.ext.commands import PartialMessageConverter
+from discord.ext.commands import PartialMessageConverter, Parameter
 
 from bot.conf import bot_conf
 
@@ -32,8 +31,10 @@ class EmbedDataConverter(commands.Converter):
                 message_data = json.loads(bytes_data, strict=False)
                 parsed = True
             except json.JSONDecodeError as e:
-                raise commands.BadArgument('**Failed to parse the supplied JSON file**\n'
-                                           f'Error(s): `{e.msg if e.msg else "Unknown"}`.')
+                raise commands.BadArgument(
+                    '**Failed to parse the supplied JSON file**\n'
+                    f'Error(s): `{e.msg if e.msg else "Unknown"}`.'
+                )
         else:
             try:
                 message_data = json.loads(argument, strict=False)
@@ -61,7 +62,7 @@ class EmbedDataConverter(commands.Converter):
 
 class ButtonRoleConverter(commands.Converter):
     async def convert(self, context, argument):
-        data = re.split('\s+', argument, maxsplit=2)
+        data = re.split(r'\s+', argument, maxsplit=2)
         if len(data) != 3:
             raise commands.BadArgument('A button needs: **a role**, **an emoji** (that bot can see), and **label** (text).')
         role_text, emoji_text, label = data
