@@ -13,13 +13,13 @@ if __name__ == "__main__":
 
     initial_extensions = [
         'bot.cogs.embed',
-        'bot.cogs.help',
+        # 'bot.cogs.help',
         'bot.cogs.log',
         'bot.cogs.owner',
-        'bot.cogs.role',
+        # 'bot.cogs.role',
         'bot.cogs.runtime',
-        'bot.tasks.socials',
-        'bot.tasks.crawlers'
+        # 'bot.tasks.socials',
+        # 'bot.tasks.crawlers'
     ]
     if bot_conf.DEBUG:
         initial_extensions += [
