@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'corsheaders',
 
+    'db.apps.adminoverwrites',
     'db.apps.logs',
 ]
 
@@ -66,7 +67,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "db/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -166,3 +167,6 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
+
+TURNSTILE_SITE_KEY = config('TURNSTILE_SITE_KEY')
+TURNSTILE_SECRET_KEY = config('TURNSTILE_SECRET_KEY')

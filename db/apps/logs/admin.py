@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+from db.apps.adminoverwrites.sites import custom_site
 from db.apps.logs.models import DiscordLog
 
 
-@admin.register(DiscordLog)
+@admin.register(DiscordLog, site=custom_site)
 class DiscordLogAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
