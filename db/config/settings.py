@@ -86,7 +86,7 @@ DATABASES = {
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': config('DATABASE_PORT'),
     }
 }
 
