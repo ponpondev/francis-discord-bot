@@ -16,7 +16,9 @@ def run(prefix, token, initial_extensions):
         initial_extensions=initial_extensions,
         command_prefix=get_prefix,
         intents=intents,
-        max_messages=1000
+        max_messages=1000,
+        member_cache_flags=discord.MemberCacheFlags.from_intents(intents),
+        chunk_guilds_at_startup=True
     )
     # remove the 'help' command
     bot.remove_command('help')
