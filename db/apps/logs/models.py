@@ -60,7 +60,7 @@ class DiscordLog(models.Model):
     type = models.CharField(max_length=50, choices=TYPE_CHOICES)
     action = models.CharField(max_length=50, choices=ACTION_CHOICES)
     subject = models.CharField(max_length=50, choices=SUBJECT_CHOICES, blank=True)
-    user_display_name = models.CharField(max_length=32)
+    user_display_name = models.CharField(max_length=100)
     user_discriminator = models.CharField(max_length=4)
     user_display_avatar = models.URLField(max_length=200)
     user_id = models.PositiveBigIntegerField()
