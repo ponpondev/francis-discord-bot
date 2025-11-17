@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
+
     'db.apps.logs',
 ]
 
@@ -50,6 +52,7 @@ ROOT_URLCONF = 'db.config.urls'
 WSGI_APPLICATION = 'db.config.wsgi.application'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -156,3 +159,8 @@ GAPI_AUTH_DICT = {
 }
 
 SPIDER_DELAY = config('SPIDER_DELAY', default=30, cast=int)
+
+# Cross-origin Resource Sharing Settings
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv())
